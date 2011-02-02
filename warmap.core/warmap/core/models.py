@@ -38,6 +38,9 @@ This module provides classes to keep data about reports.
 :organization: Semagia - <http://www.semagia.com/>
 :license:      BSD license
 """
+import re
+
+_MULTIPLE_WS_PATTERN = re.compile(r' [ ]+')
 
 # Constants which refer to a column in the CSV dataset
 KEY = 0
@@ -160,7 +163,7 @@ def _none_or_string(val):
     is returned. Otherwise the Unicode value.
     """
     if val:
-        val = val.strip()
+        val = _MULTIPLE_WS_PATTERN.sub(' ', val.strip())
     if val in ('', '<null value>'):
         return None
     return unicode(val)
