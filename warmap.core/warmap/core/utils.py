@@ -41,6 +41,16 @@ Utility functions for the war logs
 from __future__ import with_statement
 import csv
 import itertools
+from warmap.core.models import Report
+
+def get_afghanistan_reports(filename):
+    """\
+    Returns a generator which returns ``models.Report`` instances.
+
+    `filename`
+        The filename to read the dataset from.
+    """
+    return (Report(row) for row in get_afghanistan_rows(filename))
 
 def get_afghanistan_rows(filename):
     """\
@@ -53,6 +63,15 @@ def get_afghanistan_rows(filename):
         for row in csv.reader(f, delimiter=',', quotechar='"'):
             if row:
                 yield row
+
+def get_iraq_reports(filename):
+    """\
+    Returns a generator which returns ``models.Report`` instances.
+
+    `filename`
+        The filename to read the dataset from.
+    """
+    return (Report(row) for row in get_iraq_rows(filename))
 
 def get_iraq_rows(filename, omitheader=True):
     """\
