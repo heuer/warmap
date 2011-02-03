@@ -170,7 +170,9 @@ def _none_or_string(val):
 
 def _none_or(val, fn):
     """\
-
+    If the value is an emtpy string or is ``<null value>``, ``None``
+    is returned. Otherwise the function ``fn`` is applied to the
+    Unicode value.
     """
     val = _none_or_string(val)
     if val:
@@ -179,13 +181,13 @@ def _none_or(val, fn):
 
 def _none_or_float(val):
     """\
-
+    Returns either ``None`` or the float value of ``val``.
     """
     return _none_or(val, float)
 
 def _none_or_int(val):
     """\
-
+    Returns either ``None`` or the int value of ``val``.
     """
     return _none_or(val, int)
 
