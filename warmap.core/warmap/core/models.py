@@ -241,6 +241,10 @@ class Report(tuple):
         return tuple.__new__(cls, values)
 
     def items(self):
+        """\
+        Returns a generator which provides all properties and their values.
+        Example: ``('key', u'the-report-key-value')`` 
+        """
         for name in (attr for attr in dir(self) if attr[:2] != '__' and attr != 'items'):
             yield name, getattr(self, name)
  
