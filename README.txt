@@ -13,9 +13,9 @@ extract information from the reports independently of Topic Maps.
 Getting started
 ---------------
 Even if you don't know Topic Maps or don't care about Topic Maps, Warmap
-can help to extract useful information from the reports. Several 
-modules like are independent of Topic Maps and provide a convenient 
-interface to the report information.
+can help to extract useful information from the reports. Some modules are 
+independent of Topic Maps and provide a convenient interface to the report 
+information.
 
 To get started with Warmap, look into the ``warmap.core`` package.
 
