@@ -245,8 +245,11 @@ class Report(tuple):
         Returns a generator which provides all properties and their values.
         Example: ``('key', u'the-report-key-value')`` 
         """
-        for name in (attr for attr in dir(self) if attr[:2] != '__' and attr != 'items'):
-            yield name, getattr(self, name)
+        for name in (attr for attr in dir(self) if attr[:2] != '__'):
+            value = getattr(self, name)
+            if callable(value):
+                continue
+            yield name, value
  
     key = _prop(KEY)
     created = _prop(CREATED)
