@@ -10,7 +10,7 @@ from reports::
 
     >>> from warmap.core import get_afghanistan_reports
     >>> 
-    >>> for report in get_afghanistan_reports('./afg.csv')):
+    >>> for report in get_afghanistan_reports('./afg.csv'):
     >>>     print report.title
     >>>
 
