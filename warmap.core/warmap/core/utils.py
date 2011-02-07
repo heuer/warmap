@@ -64,14 +64,18 @@ def get_afghanistan_rows(filename):
             if row:
                 yield row
 
-def get_iraq_reports(filename):
+def get_iraq_reports(filename, omitheader=True):
     """\
     Returns a generator which returns ``models.Report`` instances.
 
     `filename`
         The filename to read the dataset from.
+
+    `omitheader`
+        Indicates if the first row of the dataset should be omitted
+        (``True`` by default)
     """
-    return (Report(row) for row in get_iraq_rows(filename))
+    return (Report(row) for row in get_iraq_rows(filename, omitheader))
 
 def get_iraq_rows(filename, omitheader=True):
     """\
