@@ -32,7 +32,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 """\
-Provides access to common functions and models.
+Provides access to commonly used functions and models.
 
 :author:       Lars Heuer (heuer[at]semagia.com)
 :organization: Semagia - <http://www.semagia.com/>

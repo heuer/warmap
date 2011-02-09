@@ -182,7 +182,7 @@ def _none_or(val, fn):
     """
     val = _none_or_string(val)
     if val:
-        fn(val)
+        return fn(val)
     return val
 
 def _none_or_float(val):
@@ -233,7 +233,7 @@ _COLUMN_TO_DATATYPE = {
 }
 
 def _prop(idx):
-    return property(lambda self: _COLUMN_TO_DATATYPE[idx](self[idx]))
+    return property(lambda self: self[idx])
 
 class Report(tuple):
     """\
@@ -244,7 +244,7 @@ class Report(tuple):
             values = values[2:]
         if len(values) != 32:
             raise ValueError('Expected a tuple/list with a length of 32, got %s' % len(values))
-        return tuple.__new__(cls, values)
+        return tuple.__new__(cls, [_COLUMN_TO_DATATYPE[i](v) for i, v in enumerate(values)])
 
     def items(self):
         """\
