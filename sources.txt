@@ -1,0 +1,28 @@
+======================================================
+Collection of links which may help to analyse the logs
+======================================================
+
+
+* Reference to names of military units and task-forces and their respective 
+  responsibilities
+  <http://www.globalsecurity.org/military/ops/enduring-freedom.htm>
+
+* List of bases/airfields 
+  <http://www.globalsecurity.org/military/facility/afghanistan.htm>
+
+* Time zones
+  <http://www.timeanddate.com/library/abbreviations/timezones/military/>
+
+* David Leigh, the Guardian's investigations editor, explains the online tools 
+  they have created to help you understand the secret US military files on the 
+  war in Afghanistan: 
+  <http://www.guardian.co.uk/world/datablog/video/2010/jul/25/afghanistan-war-logs-video-tutorial>
+
+* Der Spiegel: 
+  <http://www.spiegel.de/international/world/0,1518,708314,00.html>
+
+* The Guardian: 
+  <http://www.guardian.co.uk/world/series/afghanistan-the-war-logs>
+
+* The New York Times:
+  <http://www.nytimes.com/interactive/world/war-logs.html>
