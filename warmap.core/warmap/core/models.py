@@ -240,6 +240,8 @@ class Report(tuple):
     """\
     Immutable class which represents one war report.
     """
+    __slots__ = ()
+    
     def __new__(cls, values):
         if len(values) == 34: # Iraq report
             values = values[2:]
