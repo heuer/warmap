@@ -162,11 +162,17 @@ def _none_or_string(val):
     If the value is an emtpy string or is ``<null value>``, ``None``
     is returned. Otherwise the Unicode value.
     """
+    def fix_val(val):
+        # Found in the Afghanistan Diary
+        return val.replace('&amp;apos;', u"'") \
+                    .replace('&amp;amp;apos;', u"'") \
+                    .replace('&amp;quot;', u'"') \
+                    .replace('&amp;amp;', u'&')
     if val:
         val = _MULTIPLE_WS_PATTERN.sub(' ', val.strip())
     if val in ('', '<null value>'):
         return None
-    return unicode(val)
+    return unicode(fix_val(val))
 
 def _none_or(val, fn):
     """\
