@@ -39,6 +39,7 @@ This module provides classes to keep data about reports.
 :license:      BSD license
 """
 import re
+from operator import itemgetter
 
 _MULTIPLE_WS_PATTERN = re.compile(r' [ ]+')
 
@@ -233,7 +234,7 @@ _COLUMN_TO_DATATYPE = {
 }
 
 def _prop(idx):
-    return property(lambda self: self[idx])
+    return property(itemgetter(idx))
 
 class Report(tuple):
     """\
