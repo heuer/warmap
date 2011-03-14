@@ -233,8 +233,13 @@ _COLUMN_TO_DATATYPE = {
     CLASSIFICATION: _normalize_classification,
 }
 
-def _prop(idx):
-    return property(itemgetter(idx))
+_NAMES = ('key', 'created', 'type', 'category', 'tracking_number',
+          'title', 'summary', 'region', 'attack_on', 'complex_attack',
+          'reporting_unit', 'unit_name', 'type_of_unit', 'friendly_wia', 'friendly_kia',
+          'host_nation_wia', 'host_nation_kia', 'civilian_wia', 'civilian_kia', 'enemy_wia',
+          'enemy_kia', 'enemy_detained', 'mgrs', 'latitude', 'longitude',
+          'originator_group', 'updated_by_group', 'ccir', 'sigact', 'affiliation',
+          'dcolor', 'classification')
 
 class Report(tuple):
     """\
@@ -243,6 +248,9 @@ class Report(tuple):
     __slots__ = ()
     
     def __new__(cls, values):
+        class __metaclass__(type):
+            for i, name in enumerate(_NAMES):
+                setattr(cls, name, property(itemgetter(i)))
         if len(values) == 34: # Iraq report
             values = values[2:]
         if len(values) != 32:
@@ -254,41 +262,5 @@ class Report(tuple):
         Returns a generator which provides all properties and their values.
         Example: ``('key', u'the-report-key-value')`` 
         """
-        for name in (attr for attr in dir(self) if attr[:2] != '__'):
-            value = getattr(self, name)
-            if callable(value):
-                continue
-            yield name, value
- 
-    key = _prop(KEY)
-    created = _prop(CREATED)
-    type = _prop(TYPE)
-    category = _prop(CATEGORY)
-    tracking_number = _prop(TRACKING_NUMBER)
-    title = _prop(TITLE)
-    summary = _prop(SUMMARY)
-    region = _prop(REGION)
-    attack_on = _prop(ATTACK_ON)
-    complex_attack = _prop(COMPLEX_ATTACK)
-    reporting_unit = _prop(REPORTING_UNIT)
-    unit_name = _prop(UNIT_NAME)
-    type_of_unit = _prop(TYPE_OF_UNIT)
-    friendly_wia = _prop(FRIENDLY_WIA)
-    friendly_kia = _prop(FRIENDLY_KIA)
-    host_nation_wia = _prop(HOST_NATION_WIA)
-    host_nation_kia = _prop(HOST_NATION_KIA)
-    civilian_wia = _prop(CIVILIAN_WIA)
-    civilian_kia = _prop(CIVILIAN_KIA)
-    enemy_wia = _prop(ENEMY_WIA)
-    enemy_kia = _prop(ENEMY_KIA)
-    enemy_detained = _prop(ENEMY_DETAINED)
-    mgrs = _prop(MGRS)
-    latitude = _prop(LATITUDE)
-    longitude = _prop(LONGITUDE)
-    originator_group = _prop(ORIGINATOR_GROUP)
-    updated_by_group = _prop(UPDATED_BY_GROUP)
-    ccir = _prop(CCIR)
-    sigact = _prop(SIGACT)
-    affiliation = _prop(AFFILIATION)
-    dcolor = _prop(DCOLOR)
-    classification = _prop(CLASSIFICATION)
+        for i, name in enumerate(_NAMES):
+            yield name, self[i]
