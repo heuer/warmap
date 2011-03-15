@@ -207,13 +207,14 @@ _NORMALIZER = (
         _none_or_string, _none_or_string, _none_or_string, _none_or_string, _none_or_string,
         lambda x: unicode(x.upper()), _normalize_classification)
 
-_NAMES = ('key', 'created', 'type', 'category', 'tracking_number',
-          'title', 'summary', 'region', 'attack_on', 'complex_attack',
-          'reporting_unit', 'unit_name', 'type_of_unit', 'friendly_wia', 'friendly_kia',
-          'host_nation_wia', 'host_nation_kia', 'civilian_wia', 'civilian_kia', 'enemy_wia',
-          'enemy_kia', 'enemy_detained', 'mgrs', 'latitude', 'longitude',
-          'originator_group', 'updated_by_group', 'ccir', 'sigact', 'affiliation',
-          'dcolor', 'classification')
+_PROPERTY_NAMES = (
+        'key', 'created', 'type', 'category', 'tracking_number',
+        'title', 'summary', 'region', 'attack_on', 'complex_attack',
+        'reporting_unit', 'unit_name', 'type_of_unit', 'friendly_wia', 'friendly_kia',
+        'host_nation_wia', 'host_nation_kia', 'civilian_wia', 'civilian_kia', 'enemy_wia',
+        'enemy_kia', 'enemy_detained', 'mgrs', 'latitude', 'longitude',
+        'originator_group', 'updated_by_group', 'ccir', 'sigact', 'affiliation',
+        'dcolor', 'classification')
 
 class Report(tuple):
     """\
@@ -222,9 +223,6 @@ class Report(tuple):
     __slots__ = ()
     
     def __new__(cls, values):
-        class __metaclass__(type):
-            for i, name in enumerate(_NAMES):
-                setattr(cls, name, property(itemgetter(i)))
         if len(values) == 34: # Iraq report
             values = values[2:]
         if len(values) != 32:
@@ -236,5 +234,8 @@ class Report(tuple):
         Returns a generator which provides all properties and their values.
         Example: ``('key', u'the-report-key-value')`` 
         """
-        for i, name in enumerate(_NAMES):
+        for i, name in enumerate(_PROPERTY_NAMES):
             yield name, self[i]
+
+for i, name in enumerate(_PROPERTY_NAMES):
+    setattr(Report, name, property(itemgetter(i)))
