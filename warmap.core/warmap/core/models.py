@@ -168,7 +168,10 @@ def _none_or_string(val):
         return val.replace('&amp;apos;', u"'") \
                     .replace('&amp;amp;apos;', u"'") \
                     .replace('&amp;quot;', u'"') \
-                    .replace('&amp;amp;', u'&')
+                    .replace('&quot;', u'"') \
+                    .replace('&amp;amp;', u'&') \
+                    .replace('&apos;', u"'") \
+                    .replace("''", u"'")
     if val:
         val = _MULTIPLE_WS_PATTERN.sub(' ', val.strip())
     if val in ('', '<null value>'):
