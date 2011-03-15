@@ -198,40 +198,14 @@ def _none_or_int(val):
     """
     return _none_or(val, int)
 
-_COLUMN_TO_DATATYPE = {
-    KEY: unicode,
-    CREATED: unicode,
-    TYPE: _normalize_type,
-    CATEGORY: _normalize_category,
-    TRACKING_NUMBER: _none_or_string,
-    TITLE: _none_or_string,
-    SUMMARY: _none_or_string,
-    REGION: _none_or_string,
-    ATTACK_ON: _none_or_string,
-    COMPLEX_ATTACK: lambda x: x.upper() == 'TRUE',
-    REPORTING_UNIT: _none_or_string,
-    UNIT_NAME: _none_or_string,
-    TYPE_OF_UNIT: _none_or_string,
-    FRIENDLY_WIA: _none_or_int, 
-    FRIENDLY_KIA: _none_or_int,
-    HOST_NATION_WIA: _none_or_int,
-    HOST_NATION_KIA: _none_or_int,
-    CIVILIAN_WIA: _none_or_int,
-    CIVILIAN_KIA: _none_or_int,
-    ENEMY_WIA: _none_or_int,
-    ENEMY_KIA: _none_or_int,
-    ENEMY_DETAINED: _none_or_int,
-    MGRS: _none_or_string,
-    LATITUDE: _none_or_float,
-    LONGITUDE: _none_or_float,
-    ORIGINATOR_GROUP: _none_or_string,
-    UPDATED_BY_GROUP: _none_or_string,
-    CCIR: _none_or_string,
-    SIGACT: _none_or_string,
-    AFFILIATION: _none_or_string,
-    DCOLOR: lambda x: unicode(x.upper()),
-    CLASSIFICATION: _normalize_classification,
-}
+_NORMALIZER = (
+        unicode, unicode, _normalize_type, _normalize_category, _none_or_string,
+        _none_or_string, _none_or_string, _none_or_string, _none_or_string,  lambda x: x.upper() == 'TRUE',
+        _none_or_string, _none_or_string, _none_or_string, _none_or_int, _none_or_int,
+        _none_or_int, _none_or_int, _none_or_int, _none_or_int, _none_or_int,
+        _none_or_int, _none_or_int, _none_or_string, _none_or_float, _none_or_float,
+        _none_or_string, _none_or_string, _none_or_string, _none_or_string, _none_or_string,
+        lambda x: unicode(x.upper()), _normalize_classification)
 
 _NAMES = ('key', 'created', 'type', 'category', 'tracking_number',
           'title', 'summary', 'region', 'attack_on', 'complex_attack',
@@ -255,7 +229,7 @@ class Report(tuple):
             values = values[2:]
         if len(values) != 32:
             raise ValueError('Expected a tuple/list with a length of 32, got %s' % len(values))
-        return tuple.__new__(cls, [_COLUMN_TO_DATATYPE[i](v) for i, v in enumerate(values)])
+        return tuple.__new__(cls, [_NORMALIZER[i](v) for i, v in enumerate(values)])
 
     def items(self):
         """\
