@@ -73,6 +73,14 @@ def test_tuple_legal():
     for data in _TEST_DATA:
         yield check, data
 
+def test_override_kind():
+    def check(data):
+        report = models.Report(data, kind=2000)
+        eq_(2000, report.kind)
+        eq_(2000, report[constants.KIND])
+    for data in _TEST_DATA:
+        yield check, data
+
 def test_tuple_illegal():
     @raises(ValueError)
     def check(data):
