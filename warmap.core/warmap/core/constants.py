@@ -32,54 +32,48 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 """\
-Tests against models.Report
+Constants
 
 :author:       Lars Heuer (heuer[at]semagia.com)
 :organization: Semagia - <http://www.semagia.com/>
 :license:      BSD license
 """
-from nose.tools import eq_, raises
-from warmap.core import models, constants
+# Constants which refer to a column in the CSV dataset
+KEY = 0
+CREATED = 1
+TYPE = 2
+CATEGORY = 3
+TRACKING_NUMBER = 4
+TITLE = 5
+SUMMARY = 6
+REGION = 7
+ATTACK_ON = 8
+COMPLEX_ATTACK = 9
+REPORTING_UNIT = 10
+UNIT_NAME = 11
+TYPE_OF_UNIT = 12
+FRIENDLY_WIA = 13
+FRIENDLY_KIA = 14
+HOST_NATION_WIA = 15
+HOST_NATION_KIA = 16
+CIVILIAN_WIA = 17
+CIVILIAN_KIA = 18
+ENEMY_WIA = 19
+ENEMY_KIA = 20
+ENEMY_DETAINED = 21
+MGRS = 22
+LATITUDE = 23
+LONGITUDE = 24
+ORIGINATOR_GROUP = 25
+UPDATED_BY_GROUP = 26
+CCIR = 27
+SIGACT = 28
+AFFILIATION = 29
+DCOLOR = 30
+CLASSIFICATION = 31
+KIND = 32
 
-_TEST_DATA = (
-    ['0', '1', '2', '3', '4', '5', '6', '7', '8', 'FALSE', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
-    ['garbage', 'more-garbage', '0', '1', '2', '3', '4', '5', '6', '7', '8', 'TRUE', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31']
-)
-
-_TEST_DATA_ILLEGAL = (
-    map(str, range(0, 31)),
-    map(str, range(0, 35)),
-)
-
-def test_tuple_legal():
-    def check(data):
-        report = models.Report(data)
-        offset = 0
-        if len(data) == 34:
-            offset=2
-        for i, name in enumerate(models._PROPERTY_NAMES):
-            if i+offset == len(data):
-                value = len(data) == 34 and constants.KIND_IQ or constants.KIND_AF
-            else:
-                value = data[i+offset]
-            if i in (13, 14, 15, 16, 17, 18, 19, 20, 21, 23):
-                value = int(value)
-            elif i == 24:
-                value = float(value)
-            elif i == 9:
-                value = value == 'TRUE'
-            eq_(value, report[i])
-            eq_(value, getattr(report, name))
-    for data in _TEST_DATA:
-        yield check, data
-
-def test_tuple_illegal():
-    @raises(ValueError)
-    def check(data):
-        models.Report(data)
-    for data in _TEST_DATA_ILLEGAL:
-        yield check, data
-
-if __name__ == '__main__':
-    import nose
-    nose.core.runmodule()
+# Constants for the kind of report (AF report, IQ report)
+KIND_UNKNOWN = 0
+KIND_AF = 1
+KIND_IQ = 2

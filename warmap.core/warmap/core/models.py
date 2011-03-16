@@ -40,42 +40,10 @@ This module provides classes to keep data about reports.
 """
 import re
 from operator import itemgetter
+from itertools import chain
+from warmap.core import constants
 
 _MULTIPLE_WS_PATTERN = re.compile(r' [ ]+')
-
-# Constants which refer to a column in the CSV dataset
-KEY = 0
-CREATED = 1
-TYPE = 2
-CATEGORY = 3
-TRACKING_NUMBER = 4
-TITLE = 5
-SUMMARY = 6
-REGION = 7
-ATTACK_ON = 8
-COMPLEX_ATTACK = 9
-REPORTING_UNIT = 10
-UNIT_NAME = 11
-TYPE_OF_UNIT = 12
-FRIENDLY_WIA = 13
-FRIENDLY_KIA = 14
-HOST_NATION_WIA = 15
-HOST_NATION_KIA = 16
-CIVILIAN_WIA = 17
-CIVILIAN_KIA = 18
-ENEMY_WIA = 19
-ENEMY_KIA = 20
-ENEMY_DETAINED = 21
-MGRS = 22
-LATITUDE = 23
-LONGITUDE = 24
-ORIGINATOR_GROUP = 25
-UPDATED_BY_GROUP = 26
-CCIR = 27
-SIGACT = 28
-AFFILIATION = 29
-DCOLOR = 30
-CLASSIFICATION = 31
 
 # Used to canonicalize the report type
 _TYPES = {
@@ -208,7 +176,7 @@ _NORMALIZER = (
         _none_or_int, _none_or_int, _none_or_int, _none_or_int, _none_or_int,
         _none_or_int, _none_or_int, _none_or_string, _none_or_float, _none_or_float,
         _none_or_string, _none_or_string, _none_or_string, _none_or_string, _none_or_string,
-        lambda x: unicode(x.upper()), _normalize_classification)
+        lambda x: unicode(x.upper()), _normalize_classification, int)
 
 _PROPERTY_NAMES = (
         'key', 'created', 'type', 'category', 'tracking_number',
@@ -217,7 +185,7 @@ _PROPERTY_NAMES = (
         'host_nation_wia', 'host_nation_kia', 'civilian_wia', 'civilian_kia', 'enemy_wia',
         'enemy_kia', 'enemy_detained', 'mgrs', 'latitude', 'longitude',
         'originator_group', 'updated_by_group', 'ccir', 'sigact', 'affiliation',
-        'dcolor', 'classification')
+        'dcolor', 'classification', 'kind')
 
 class Report(tuple):
     """\
@@ -225,12 +193,16 @@ class Report(tuple):
     """
     __slots__ = ()
     
-    def __new__(cls, values):
+    def __new__(cls, values, kind=None):
         if len(values) == 34: # Iraq report
             values = values[2:]
+            if kind is None:
+                kind = constants.KIND_IQ
+        elif kind is None:
+            kind = constants.KIND_AF
         if len(values) != 32:
             raise ValueError('Expected a tuple/list with a length of 32, got %s' % len(values))
-        return tuple.__new__(cls, [_NORMALIZER[i](v) for i, v in enumerate(values)])
+        return tuple.__new__(cls, [_NORMALIZER[i](v) for i, v in enumerate(chain(values, (kind,)))])
 
     def items(self):
         """\
