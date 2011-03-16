@@ -47,6 +47,7 @@ _TEST_STRING_DATA = (
     ('&quot;BEARING POINT&quot;', '"BEARING POINT"'),
     ('LETTER&amp;amp;apos;&amp;amp;apos;S', "LETTER'S"),
     ('', None),
+    ('<null value>', None),
 )
 
 _TEST_INT_DATA = (
