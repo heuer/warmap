@@ -92,7 +92,7 @@ class Report(tuple):
 
     def items(self):
         """\
-        Returns a generator which provides all properties and their values.
+        Returns a generator which provides all property names and their values.
         Example: ``('key', u'the-report-key-value')`` 
         """
         for i, name in enumerate(_PROPERTY_NAMES):

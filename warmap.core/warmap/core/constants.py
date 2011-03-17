@@ -71,7 +71,7 @@ SIGACT = 28
 AFFILIATION = 29
 DCOLOR = 30
 CLASSIFICATION = 31
-KIND = 32
+KIND = 32 # Not contained in the CSV dataset, see models.Report
 
 # Constants for the kind of report (AF report, IQ report)
 KIND_AF = 1

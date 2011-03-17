@@ -56,6 +56,13 @@ _TEST_INT_DATA = (
     ('', None),
 )
 
+_TEST_FLOAT_DATA = (
+    ('0', 0.0),
+    ('2', 2.0),
+    ('1.0', 1.0),
+    ('', None),
+)
+
 def test_string_normalization():
     def check(content, expected):
         eq_(expected, c14n.none_or_string(content))
@@ -66,6 +73,12 @@ def test_int_normalization():
     def check(content, expected):
         eq_(expected, c14n.none_or_int(content))
     for content, expected in _TEST_INT_DATA:
+        yield check, content, expected
+
+def test_float_normalization():
+    def check(content, expected):
+        eq_(expected, c14n.none_or_float(content))
+    for content, expected in _TEST_FLOAT_DATA:
         yield check, content, expected
 
 

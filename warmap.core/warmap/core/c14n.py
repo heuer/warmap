@@ -40,8 +40,6 @@ Canocalization of report content.
 """
 import re
 
-_MULTIPLE_WS_PATTERN = re.compile(r' [ ]+')
-
 # Used to canonicalize the report type
 _TYPES = {
     '': u'None Selected', #TODO: Is that okay?
@@ -122,6 +120,9 @@ def normalize_classification(val):
     if val:
         val = val.upper()
     return val
+
+
+_MULTIPLE_WS_PATTERN = re.compile(r' [ ]+')
 
 def none_or_string(val):
     """\
