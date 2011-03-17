@@ -74,6 +74,5 @@ CLASSIFICATION = 31
 KIND = 32
 
 # Constants for the kind of report (AF report, IQ report)
-KIND_UNKNOWN = 0
 KIND_AF = 1
 KIND_IQ = 2
