@@ -44,6 +44,8 @@ from warmap.core import constants
 from warmap.core.c14n import normalize_type, normalize_category, normalize_classification, \
                              none_or_string, none_or_int, none_or_float
 
+__all__ = ['Report']
+
 _NORMALIZER = (
         unicode, unicode, normalize_type, normalize_category, none_or_string,
         none_or_string, none_or_string, none_or_string, none_or_string,  lambda x: x.upper() == 'TRUE',
