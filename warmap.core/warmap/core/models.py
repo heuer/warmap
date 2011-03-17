@@ -38,145 +38,20 @@ This module provides classes to keep data about reports.
 :organization: Semagia - <http://www.semagia.com/>
 :license:      BSD license
 """
-import re
 from operator import itemgetter
 from itertools import chain
 from warmap.core import constants
-
-_MULTIPLE_WS_PATTERN = re.compile(r' [ ]+')
-
-# Used to canonicalize the report type
-_TYPES = {
-    '': u'None Selected', #TODO: Is that okay?
-    'explosive hazard': u'Explosive Hazard',
-    'friendly fire': u'Friendly Fire',
-    'friendly action': u'Friendly Action',
-    'criminal event': u'Criminal Event',
-    'other': u'Other',
-    'non-combat event': u'Non-Combat Event',
-    'counter insurgency': u'Counter-Insurgency',
-}
-
-# Used to canonicalize the report category
-_CATEGORIES = {
-    '': u'None Selected', #TODO: Is that okay?
-    '<null value>': u'None Selected', #TODO: Is that okay?
-    'other': 'Other',
-    'blue-blue': 'Blue-Blue',
-    'blue-green': 'Blue-Green',
-    'green-blue': 'Green-Blue',
-    'green-green': 'Green-Green',
-    'blue-on-white': 'Blue-On-White', #TODO: Is this the same as Blue-White?
-    'Counter Insurgency': u'Counter-Insurgency',
-    'ied hoax': 'IED Hoax',
-    'murder': 'Murder',
-    'arrest': 'Arrest',
-    'smuggling': 'Smuggling',
-    'other offensive': 'Other Offensive',
-    'unexploded ordnance': 'Unexploded Ordnance',
-    'accident': 'Accident',
-    'raid': 'Raid',
-    'attack': 'Attack',
-    'attack threat': 'Attack Threat',
-    'green-white': 'Green-White',
-    'ied suspected': 'IED Suspected',
-    'kidnapping': 'Kidnapping',
-    'confiscation': 'Confiscation',
-    'detain': 'Detain',
-    'meeting': 'Meeting',
-    'explosive remnants of war (erw)/turn in': 'Explosive Remnants of War (ERW)/Turn In',
-    'indirect fire threat': 'Indirect Fire Threat',
-    'indirect fire': 'Indirect Fire',
-    'direct fire': 'Direct Fire',
-    'ied found/cleared': 'IED Found/Cleared',
-    'equipment failure': 'Equipment Failure',
-    'sniper ops': 'Sniper Ops',
-    'other defensive': 'Other Defensive',
-    'medevac': 'MEDEVAC',
-    'supporting cf': 'Supporting CF',
-    'escalation of force': 'Escalation of Force',
-    'unknown explosion': 'Unknown Explosion',
-    'cordon/search': 'Cordon/Search',
-    'explosive remnants of war (erw) found/cleared': 'Explosive Remnants of War (ERW) Found/Cleared',
-    'tests of security': 'Tests of Security',
-    'ied explosion': 'IED Explosion',
-    'cache found/cleared': 'Cache Found/Cleared',
-    'lasing': 'Lasing',
-    'police actions': 'Police Actions',
-}
-
-def _normalize_type(val):
-    """\
-    Returns a normalized value of the provided type.
-    """
-    return unicode(_TYPES.get(val.lower(), val))
-
-def _normalize_category(val):
-    """\
-    Returns a normalized value of the provided category.
-    """
-    return unicode(_CATEGORIES.get(val.lower(), val))
-
-def _normalize_classification(val):
-    """\
-    Returns a normalized value of the provided classification.
-    """
-    val = _none_or_string(val)
-    if val:
-        val = val.upper()
-    return val
-
-def _none_or_string(val):
-    """\
-    If the value is an emtpy string or is ``<null value>``, ``None``
-    is returned. Otherwise the Unicode value.
-    """
-    def fix_val(val):
-        # Found in the Afghanistan Diary
-        return val.replace('&amp;apos;', u"'") \
-                    .replace('&amp;amp;apos;', u"'") \
-                    .replace('&amp;quot;', u'"') \
-                    .replace('&quot;', u'"') \
-                    .replace('&amp;amp;', u'&') \
-                    .replace('&apos;', u"'") \
-                    .replace("''", u"'")
-    if val:
-        val = _MULTIPLE_WS_PATTERN.sub(' ', val.strip())
-    if val in ('', '<null value>'):
-        return None
-    return unicode(fix_val(val))
-
-def _none_or(val, fn):
-    """\
-    If the value is an emtpy string or is ``<null value>``, ``None``
-    is returned. Otherwise the function ``fn`` is applied to the
-    Unicode value.
-    """
-    val = _none_or_string(val)
-    if val:
-        return fn(val)
-    return val
-
-def _none_or_float(val):
-    """\
-    Returns either ``None`` or the float value of ``val``.
-    """
-    return _none_or(val, float)
-
-def _none_or_int(val):
-    """\
-    Returns either ``None`` or the int value of ``val``.
-    """
-    return _none_or(val, int)
+from warmap.core.c14n import normalize_type, normalize_category, normalize_classification, \
+                             none_or_string, none_or_int, none_or_float
 
 _NORMALIZER = (
-        unicode, unicode, _normalize_type, _normalize_category, _none_or_string,
-        _none_or_string, _none_or_string, _none_or_string, _none_or_string,  lambda x: x.upper() == 'TRUE',
-        _none_or_string, _none_or_string, _none_or_string, _none_or_int, _none_or_int,
-        _none_or_int, _none_or_int, _none_or_int, _none_or_int, _none_or_int,
-        _none_or_int, _none_or_int, _none_or_string, _none_or_float, _none_or_float,
-        _none_or_string, _none_or_string, _none_or_string, _none_or_string, _none_or_string,
-        lambda x: unicode(x.upper()), _normalize_classification, int)
+        unicode, unicode, normalize_type, normalize_category, none_or_string,
+        none_or_string, none_or_string, none_or_string, none_or_string,  lambda x: x.upper() == 'TRUE',
+        none_or_string, none_or_string, none_or_string, none_or_int, none_or_int,
+        none_or_int, none_or_int, none_or_int, none_or_int, none_or_int,
+        none_or_int, none_or_int, none_or_string, none_or_float, none_or_float,
+        none_or_string, none_or_string, none_or_string, none_or_string, none_or_string,
+        lambda x: unicode(x.upper()), normalize_classification, int)
 
 _PROPERTY_NAMES = (
         'key', 'created', 'type', 'category', 'tracking_number',

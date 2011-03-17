@@ -39,7 +39,7 @@ Tests against value normalization.
 :license:      BSD license
 """
 from nose.tools import eq_
-from warmap.core import models as m
+from warmap.core import c14n
 
 _TEST_STRING_DATA = (
     ('HE&apos;&apos;S', "HE'S"),
@@ -58,13 +58,13 @@ _TEST_INT_DATA = (
 
 def test_string_normalization():
     def check(content, expected):
-        eq_(expected, m._none_or_string(content))
+        eq_(expected, c14n.none_or_string(content))
     for content, expected in _TEST_STRING_DATA:
         yield check, content, expected
 
 def test_int_normalization():
     def check(content, expected):
-        eq_(expected, m._none_or_int(content))
+        eq_(expected, c14n.none_or_int(content))
     for content, expected in _TEST_INT_DATA:
         yield check, content, expected
 
