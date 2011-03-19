@@ -77,8 +77,8 @@ class Report(tuple):
         `values`
             A report row either from the AF (length=32) or the IQ (length=34) logs.
         `kind`
-            Indicates the kind of report. If it's set to ``None``, the kind is
-            detected automatically (based on the length of the values parameter).
+            An integer which indicates the kind of report. If it's set to ``None`` (default),
+            the kind is detected automatically (based on the length of the values parameter).
         """
         if len(values) == 34: # Iraq report
             values = values[2:]
