@@ -39,7 +39,8 @@ Tests against models.Report
 :license:      BSD license
 """
 from nose.tools import eq_, raises
-from warmap.core import models, constants
+from warmap.core import models
+from warmap.core.constants import *
 
 _TEST_DATA = (
     ['0', '1', '2', '3', '4', '5', '6', '7', '8', 'FALSE', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
@@ -59,14 +60,17 @@ def test_tuple_legal():
             offset=2
         for i, name in enumerate(models._PROPERTY_NAMES):
             if i+offset == len(data):
-                value = len(data) == 34 and constants.KIND_IQ or constants.KIND_AF
+                value = len(data) == 34 and KIND_IQ or KIND_AF
             else:
                 value = data[i+offset]
-            if i in (13, 14, 15, 16, 17, 18, 19, 20, 21, 23):
+            if i in (FRIENDLY_WIA, FRIENDLY_KIA,
+                     HOST_NATION_WIA, HOST_NATION_KIA,
+                     CIVILIAN_WIA, CIVILIAN_KIA,
+                     ENEMY_WIA, ENEMY_KIA, ENEMY_DETAINED):
                 value = int(value)
-            elif i == 24:
+            elif i in (LATITUDE, LONGITUDE):
                 value = float(value)
-            elif i == 9:
+            elif i == COMPLEX_ATTACK:
                 value = value == 'TRUE'
             eq_(value, report[i])
             eq_(value, getattr(report, name))
@@ -77,7 +81,7 @@ def test_override_kind():
     def check(data):
         report = models.Report(data, kind=2000)
         eq_(2000, report.kind)
-        eq_(2000, report[constants.KIND])
+        eq_(2000, report[KIND])
     for data in _TEST_DATA:
         yield check, data
 
