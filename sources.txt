@@ -35,24 +35,37 @@ Understanding the structure of the report
 =========================================
 
 * The message starts with a unique ReportKey; it may be used to find messages and also to reference them.
-* The next field is DateOccurred; this provides the date and time of the event or message. See Time and Date formats for details on the used formats.
-* Type contains typically a broad classification of the type of event, like Friendly Action, Enemy Action, Non-Combat Event. It can be used to filter for messages of a certain type.
-* Category further describes what kind of event the message is about. There are a lot of categories, from propaganda, weapons cache finds to various types of combat activities.
+* The next field is DateOccurred; this provides the date and time of the event or message. 
+  See Time and Date formats for details on the used formats.
+* Type contains typically a broad classification of the type of event, like Friendly Action, Enemy Action, 
+  Non-Combat Event. It can be used to filter for messages of a certain type.
+* Category further describes what kind of event the message is about. 
+  There are a lot of categories, from propaganda, weapons cache finds to various types of combat activities.
 * TrackingNumber Is an internal tracking number.
 * Title contains the title of the message.
 * Summary is the actual description of the event. Usually it contains the bulk of the message content.
 * Region contains the broader region of the event.
 * AttackOn contains the information who was attacked during an event.
-* ComplexAttack is a flag that signifies that an attack was a larger operation that required more planning, coordination and preparation. This is used as a quick filter criterion to detect events that were out of the ordinary in terms of enemy capabilities.
+* ComplexAttack is a flag that signifies that an attack was a larger operation that required more planning, 
+  coordination and preparation. This is used as a quick filter criterion to detect events that were out of 
+  the ordinary in terms of enemy capabilities.
 * ReportingUnit, UnitName, TypeOfUnit contains the information on the military unit that authored the report.
-* Wounded and death are listed as numeric values, sorted by affiliation. WIA is the abbreviation for Wounded In Action. KIA is the abbreviation for Killed In Action. The numbers are recorded in the fields FriendlyWIA,FriendlyKIA,HostNationWIA,HostNationKIA,CivilianWIA,CivilianKIA,EnemyWIA,EnemyKIA
+* Wounded and death are listed as numeric values, sorted by affiliation. 
+  WIA is the abbreviation for Wounded In Action. 
+  KIA is the abbreviation for Killed In Action. 
+  The numbers are recorded in the fields FriendlyWIA,FriendlyKIA,HostNationWIA,HostNationKIA,CivilianWIA,CivilianKIA,EnemyWIA,EnemyKIA
 * Captured enemies are numbered in the field EnemyDetained.
 * The location of events are recorded in the fields MGRS (Military Grid Reference System), Latitude, Longitude.
-* The next group of fields contains information on the overall military unit, like ISAF Headquarter, that a message originated from or was updated by. Updates frequently occur when an analysis group, like one that investigated an incident or looked into the makeup of an Improvised Explosive Device added its results to a message.
+* The next group of fields contains information on the overall military unit, like ISAF Headquarter, that a 
+  message originated from or was updated by. 
+  Updates frequently occur when an analysis group, like one that investigated an incident or looked into the 
+  makeup of an Improvised Explosive Device added its results to a message.
 * OriginatorGroup, UpdatedByGroup
 * CCIR Commander's Critical Information Requirements
-* If an activity that is reported is deemed "significant", this is noted in the field Sigact. Significant activities are analyzed and evaluated by a special group in the command structure.
+* If an activity that is reported is deemed "significant", this is noted in the field Sigact. 
+  Significant activities are analyzed and evaluated by a special group in the command structure.
 * Affiliation describes if the event was of friendly or enemy nature.
-* DColor controls the display color of the message in the messaging system and map views. Messages relating to enemy activity have the color Red, those relating to friendly activity are colored Blue.
+* DColor controls the display color of the message in the messaging system and map views. 
+  Messages relating to enemy activity have the color Red, those relating to friendly activity are colored Blue.
 * Classification contains the classification level of the message, e.g. Secret
 
